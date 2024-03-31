@@ -6,6 +6,8 @@ public class PlayerController : MonoBehaviour
 {
     // Start is called before the first frame update
     private Rigidbody2D playerRb;
+    private Animator playerAnim;
+
     public float jumpForce = 10f;
     public float gravityModifier = 2f;
     public bool isOnGround = true;
@@ -15,6 +17,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         playerRb = GetComponent<Rigidbody2D>(); // Rigidbody2D instead of Rigidbody
+        playerAnim = GetComponent<Animator>(); // Animator
         Physics2D.gravity *= gravityModifier; // Use Physics2D for 2D physics
     }
 
@@ -25,6 +28,7 @@ public class PlayerController : MonoBehaviour
         {
             playerRb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse); // Vector2 for 2D, ForceMode2D instead of ForceMode
             isOnGround = false;
+            playerAnim.SetTrigger("Jump_trig");
         }
     }
 
