@@ -7,6 +7,12 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     private Rigidbody2D playerRb;
     private Animator playerAnim;
+    public ParticleSystem dirtParticle;
+    public ParticleSystem explosionParticle;
+    public AudioClip jumpSound;
+    public AudioClip crashSound;
+    private AudioSource playerAudio;
+    public AudioSource cameraAudio;
 
     public float jumpForce = 10f;
     public float gravityModifier = 2f;
@@ -19,6 +25,9 @@ public class PlayerController : MonoBehaviour
         playerRb = GetComponent<Rigidbody2D>(); // Rigidbody2D instead of Rigidbody
         playerAnim = GetComponent<Animator>(); // Animator
         Physics2D.gravity *= gravityModifier; // Use Physics2D for 2D physics
+        playerAudio = GetComponent<AudioSource>();
+        
+        
     }
 
     // Update is called once per frame
@@ -29,6 +38,8 @@ public class PlayerController : MonoBehaviour
             playerRb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse); // Vector2 for 2D, ForceMode2D instead of ForceMode
             isOnGround = false;
             playerAnim.SetTrigger("Jump_trig");
+            dirtParticle.Stop();
+            playerAudio.PlayOneShot(jumpSound, 1.0f);
         }
     }
 
@@ -37,12 +48,17 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isOnGround = true;
+            dirtParticle.Play();
         }
         else if (collision.gameObject.CompareTag("Obstacle"))
         {
             gameOver = true;
             playerAnim.SetBool("Death_b", true);
             Debug.Log("Game Over");
+            dirtParticle.Stop();
+            explosionParticle.Play();
+            playerAudio.PlayOneShot(crashSound, 1.0f);
+            cameraAudio.Stop();
             
         }
     }
