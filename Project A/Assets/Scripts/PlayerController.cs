@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -18,6 +19,12 @@ public class PlayerController : MonoBehaviour
     public float gravityModifier = 2f;
     public bool isOnGround = true;
     public bool gameOver = false;
+
+    // UI elements
+    public TextMeshProUGUI pointsText;
+    public TextMeshProUGUI coinsText;
+    private int totalPoints = 0;
+    private int coinsCollected = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -41,6 +48,12 @@ public class PlayerController : MonoBehaviour
             dirtParticle.Stop();
             playerAudio.PlayOneShot(jumpSound, 1.0f);
         }
+
+        if (!gameOver)
+        {
+            totalPoints++; // Increment points continuously if the game is not over
+            UpdateUI(); // Update UI with new points value
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -61,5 +74,31 @@ public class PlayerController : MonoBehaviour
             cameraAudio.Stop();
             
         }
+        else if (collision.gameObject.CompareTag("Coin"))
+        {
+            // Increment coins collected
+            coinsCollected++;
+            // Update UI for coins
+            UpdateUI();
+            // Optionally, you can add a sound effect for collecting coins here
+            // playerAudio.PlayOneShot(coinCollectSound, 1.0f);
+            // Destroy the coin object
+            Destroy(collision.gameObject);
+        }
+    }
+
+    // Method to update UI text for points and coins
+    void UpdateUI()
+    {
+        pointsText.text = "Points: " + totalPoints.ToString();
+        coinsText.text = "Coins: " + coinsCollected.ToString();
+    }
+
+    // Method to reset points and coins (call this when resetting the game)
+    void ResetUI()
+    {
+        totalPoints = 0;
+        coinsCollected = 0;
+        UpdateUI();
     }
 }
