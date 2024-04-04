@@ -841,6 +841,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obstaclePrefab: {fileID: 523168901974471536, guid: 527713a3e256870419527e2877d1027c, type: 3}
+  coinPrefab: {fileID: 1325044096189238722, guid: c9d4c031e5067634a8e03178883c4e68, type: 3}
 --- !u!1 &1106932446
 GameObject:
   m_ObjectHideFlags: 0
@@ -1348,6 +1349,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 838d6652409a5124b94eaec094414591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 30
 --- !u!1 &1632691869
 GameObject:
   m_ObjectHideFlags: 0
@@ -1730,6 +1732,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 838d6652409a5124b94eaec094414591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 30
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

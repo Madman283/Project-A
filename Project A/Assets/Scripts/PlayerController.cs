@@ -74,16 +74,20 @@ public class PlayerController : MonoBehaviour
             cameraAudio.Stop();
             
         }
-        else if (collision.gameObject.CompareTag("Coin"))
+        
+    }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Coin"))
         {
             // Increment coins collected
             coinsCollected++;
             // Update UI for coins
             UpdateUI();
+            // Destroy the coin object
+            Destroy(other.gameObject);
             // Optionally, you can add a sound effect for collecting coins here
             // playerAudio.PlayOneShot(coinCollectSound, 1.0f);
-            // Destroy the coin object
-            Destroy(collision.gameObject);
         }
     }
 

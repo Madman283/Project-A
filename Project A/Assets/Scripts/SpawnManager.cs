@@ -4,31 +4,49 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    // Start is called before the first frame update
+    // Prefab for obstacle and coin
     public GameObject obstaclePrefab;
-    private Vector2 spawnPos = new Vector2(25, 0); // Adjusted for 2D
+    public GameObject coinPrefab;
+
+    // Spawn positions for obstacle and coin
+    private Vector2 obstacleSpawnPos = new Vector2(25, 0);
+    private Vector2 coinSpawnPos = new Vector2(25, 1); // Adjust as needed
+
+    // Delay and repeat rate for spawning obstacles
     private float startDelay = 2;
     private float repeatRate = 2;
+
+    // Reference to the PlayerController script
     private PlayerController playerControllerScript;
 
     // Start is called before the first frame update
     void Start()
     {
+        // Find and cache the PlayerController script
         playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
+
+        // Start spawning obstacles
         InvokeRepeating("SpawnObstacle", startDelay, repeatRate);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
+    // Method to spawn obstacles
     void SpawnObstacle()
     {
-        if (playerControllerScript.gameOver == false)
+        // Check if the game is not over
+        if (!playerControllerScript.gameOver)
         {
-            Instantiate(obstaclePrefab, spawnPos, Quaternion.identity); // Adjusted for 2D
+            // Instantiate obstacle at obstacleSpawnPos
+            Instantiate(obstaclePrefab, obstacleSpawnPos, Quaternion.identity);
+
+          
+            Invoke("SpawnCoin", 5f);
         }
+    }
+
+    // Method to spawn coins
+    void SpawnCoin()
+    {
+        // Instantiate coin at coinSpawnPos
+        Instantiate(coinPrefab, coinSpawnPos, Quaternion.identity);
     }
 }
