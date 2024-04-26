@@ -609,6 +609,7 @@ MonoBehaviour:
   gravityModifier: 2
   isOnGround: 1
   gameOver: 0
+  spawnManager: {fileID: 885767529}
   pointsText: {fileID: 1106932448}
   coinsText: {fileID: 1299066706}
 --- !u!95 &711948136

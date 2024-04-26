@@ -19,6 +19,9 @@ public class SpawnManager : MonoBehaviour
     // Reference to the PlayerController script
     private PlayerController playerControllerScript;
 
+    // ID for the repeating invocation
+    private string spawnObstacleInvokeName = "SpawnObstacle";
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,8 +41,9 @@ public class SpawnManager : MonoBehaviour
             // Instantiate obstacle at obstacleSpawnPos
             Instantiate(obstaclePrefab, obstacleSpawnPos, Quaternion.identity);
 
-          
-            Invoke("SpawnCoin", 5f);
+
+            //Invoke("SpawnCoin", 5f);
+            SpawnCoin();
         }
     }
 
@@ -48,5 +52,11 @@ public class SpawnManager : MonoBehaviour
     {
         // Instantiate coin at coinSpawnPos
         Instantiate(coinPrefab, coinSpawnPos, Quaternion.identity);
+    }
+
+    // Method to cancel the repeating invocation
+    public void StopSpawning()
+    {
+        CancelInvoke(spawnObstacleInvokeName);
     }
 }

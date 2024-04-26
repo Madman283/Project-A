@@ -20,6 +20,9 @@ public class PlayerController : MonoBehaviour
     public bool isOnGround = true;
     public bool gameOver = false;
 
+    // Reference to the SpawnManager script
+    public SpawnManager spawnManager;
+
     // UI elements
     public TextMeshProUGUI pointsText;
     public TextMeshProUGUI coinsText;
@@ -65,13 +68,15 @@ public class PlayerController : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Obstacle"))
         {
-            gameOver = true;
-            playerAnim.SetBool("Death_b", true);
-            Debug.Log("Game Over");
-            dirtParticle.Stop();
-            explosionParticle.Play();
-            playerAudio.PlayOneShot(crashSound, 1.0f);
-            cameraAudio.Stop();
+            EndGame();
+
+            //gameOver = true;
+            //playerAnim.SetBool("Death_b", true);
+            //Debug.Log("Game Over");
+            //dirtParticle.Stop();
+            //explosionParticle.Play();
+            //playerAudio.PlayOneShot(crashSound, 1.0f);
+            //cameraAudio.Stop();
             
         }
         
@@ -104,5 +109,20 @@ public class PlayerController : MonoBehaviour
         totalPoints = 0;
         coinsCollected = 0;
         UpdateUI();
+    }
+
+    // Method to handle game over
+    void EndGame()
+    {
+        gameOver = true;
+        playerAnim.SetBool("Death_b", true);
+        Debug.Log("Game Over");
+        dirtParticle.Stop();
+        explosionParticle.Play();
+        playerAudio.PlayOneShot(crashSound, 1.0f);
+        // Implement logic to update UI for game over
+        UpdateUI();
+        // Call StopSpawning() method in SpawnManager to stop spawning obstacles and coins
+        spawnManager.StopSpawning();
     }
 }
