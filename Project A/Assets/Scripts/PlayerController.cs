@@ -23,6 +23,9 @@ public class PlayerController : MonoBehaviour
     // Reference to the SpawnManager script
     public SpawnManager spawnManager;
 
+    // Reference to the EndGamePopup script
+    //public EndGamePopup endGamePopup;
+
     // UI elements
     public TextMeshProUGUI pointsText;
     public TextMeshProUGUI coinsText;
@@ -124,5 +127,10 @@ public class PlayerController : MonoBehaviour
         UpdateUI();
         // Call StopSpawning() method in SpawnManager to stop spawning obstacles and coins
         spawnManager.StopSpawning();
+        // Notify the EndGamePopup script that the game has ended
+        //if (endGamePopup != null)
+        //{
+        //    endGamePopup.ShowPopupMenu();
+        //}
     }
 }
